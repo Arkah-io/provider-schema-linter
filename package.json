@@ -1,6 +1,6 @@
 {
   "name": "arkah-provider-schema-linter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Offline, source-linked checks for JSON Schemas sent to structured-output APIs.",
   "type": "module",
   "license": "MIT",

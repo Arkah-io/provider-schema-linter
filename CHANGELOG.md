@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 — 2026-10-03
+
+- Clean up public documentation, contributor guidance, and the pull request template.
+- Clarify the limits of lint results and provider schema guarantees.
+- Simplify demo output. Runtime behavior, public APIs, provider rules, and dependencies are unchanged.
+
 ## 0.1.0 — 2026-10-03
 
 - Profiles `openai-strict`, `anthropic-json-output` and `gemini-json-output`, ruleset `2026-10-01`.

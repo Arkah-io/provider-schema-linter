@@ -23,7 +23,7 @@ ERROR openai.required-properties "/required"
 2 error(s), 1 warning(s)
 ```
 
-**Status:** v0.1.0 preview, independently maintained. ESM only. Independent of OpenAI, Anthropic and Google. The examples are synthetic schemas.
+**Status:** v0.1.1 preview, independently maintained. ESM only. Independent of OpenAI, Anthropic and Google. The examples are synthetic schemas.
 
 ## Install
 
@@ -47,7 +47,7 @@ node dist/cli.js --profile anthropic-json-output --json examples/report-with-pit
 
 The Anthropic command intentionally exits `1`: Anthropic's native structured-output subset rejects several constraints in that example. The demo compares all three profiles and checks an optional-to-nullable change with Zod. [Read the demo](examples/demo.mjs).
 
-To test a local candidate in another project, run `pnpm pack` here, then `pnpm add /absolute/path/to/arkah-provider-schema-linter-0.1.0.tgz zod@^4.6.5` there. Zod is a peer dependency, so `lintZodSchema` exports your own Zod instances.
+To test a local candidate in another project, run `pnpm pack` here, then `pnpm add /absolute/path/to/arkah-provider-schema-linter-0.1.1.tgz zod@^4.6.5` there. Zod is a peer dependency, so `lintZodSchema` exports your own Zod instances.
 
 ## The useful boundary is after export
 
