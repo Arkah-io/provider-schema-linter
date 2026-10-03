@@ -101,6 +101,4 @@ console.log(
   `  Leaky emit schema: ${leaky.length} loose-emit warning(s): ${leaky.map((d) => `${d.code} ${d.path}`).join(', ')}`,
 );
 
-console.log(
-  '\nNo model calls, credentials, or private application schemas used.',
-);
+console.log('\nNo model calls or credentials required.');

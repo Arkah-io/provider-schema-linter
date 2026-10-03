@@ -131,7 +131,7 @@ const targets = [
 
 for (const { name, schema, profiles } of targets) {
   for (const profile of profiles) {
-    test(`${name} is accepted by ${profile}`, () => {
+    test(`${name} has no known errors for ${profile}`, () => {
       const { result } = lintZodSchema(schema, { profile });
       const errors = result.diagnostics.filter((d) => d.severity === 'error');
       assert.deepEqual(errors, [], JSON.stringify(errors, null, 2));
@@ -181,7 +181,7 @@ A standalone transform usually cannot be exported in output mode; a pipeline wit
 
 ## Keep repairable bounds out of the model's schema
 
-Passing the provider profiles shows that a schema is accepted. It does not show that a schema is a good one to send. A `maxLength` on free text is cut mid-sentence by one provider and ignored by another, and an ignored bound turns valid output into a strict-parse failure and a paid retry. The `/emit` entry point supports a different pattern: give the model the shape, keep the bounds in your durable schema, and join the two with a pure normalizer.
+A clean provider report means no configured check failed; it does not guarantee API acceptance. Length bounds also need an application policy: enforcement and SDK conversion vary, and output that exceeds a bound can fail strict parsing and trigger another model call. When shortening preserves the intended meaning, the `/emit` entry point lets you give the model the shape, keep the bounds in your storage schema, and join the two with a pure normalizer.
 
 ```ts
 import { z } from 'zod';
@@ -207,7 +207,7 @@ const Summary = defineEmitContract({
 
 const summary = Summary.parse(modelJson); // overruns are trimmed, not retried
 
-// In a test: accepted on every routed provider, and verbose samples normalize.
+// Check every routed provider profile and normalize representative verbose samples.
 assertEmitContract(Summary, {
   profiles: ['openai-strict', 'anthropic-json-output'],
   samples: [{ title: 'x'.repeat(500), points: Array(40).fill('a long point') }],
@@ -235,7 +235,7 @@ node dist/cli.js --profile gemini-json-output --warnings-as-errors examples/port
 cat examples/portable-report.schema.json | node dist/cli.js --profile openai-strict --json -
 ```
 
-After installing the tarball, use `pnpm exec provider-schema-lint` in place of `node dist/cli.js`. Pass the schema itself, not an API request envelope or a Zod JavaScript module. The CLI accepts one schema and one profile per invocation.
+After installing the package, use `pnpm exec provider-schema-lint` in place of `node dist/cli.js`. Pass the schema itself, not an API request envelope or a Zod JavaScript module. The CLI accepts one schema and one profile per invocation.
 
 | Exit | Meaning                                                                       |
 | ---- | ----------------------------------------------------------------------------- |
@@ -273,12 +273,4 @@ See [SECURITY.md](SECURITY.md) for reporting vulnerabilities. MIT licensed. No p
 
 ## Background
 
-This linter comes from [Arkah](https://arkah.io), an AI workspace whose structured-output calls can route to OpenAI, Anthropic or Gemini models. One conformance test there lints every call's schema against each provider it can reach. This package is that check, rewritten against the providers' public documentation, with no Arkah schemas or prompts.
-
-## Impact to User
-
-- **What changed for users:** Exported schemas and loose-emit contracts can be checked before model requests.
-- **UX impact (positive/negative):** Earlier diagnostics and predictable normalization can prevent avoidable retries; warnings require judgment.
-- **Who is affected:** Developers using structured output or strict tools with the documented API modes.
-- **Risks/edge-cases for user experience:** Static checks cannot guarantee provider acceptance or prove that a normalizer handles every output.
-- **How to verify from a user perspective:** Run `pnpm verify`, `pnpm smoke:package`, and the loose-emit demo; add representative samples from your own contract.
+Originally developed at [Arkah](https://arkah.io) to check schemas across structured-output providers.
