@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "title": { "type": "string", "minLength": 8 },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "labels": { "type": "object", "additionalProperties": { "type": "string" } }
+  },
+  "required": ["title", "confidence"],
+  "additionalProperties": false
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "ready"] },
+    "note": { "type": ["string", "null"] },
+    "sources": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["title", "status", "note", "sources"],
+  "additionalProperties": false
+}

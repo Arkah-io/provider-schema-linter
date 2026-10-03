@@ -1,0 +1,90 @@
+{
+  "name": "arkah-provider-schema-linter",
+  "version": "0.1.0",
+  "description": "Offline, source-linked checks for JSON Schemas sent to structured-output APIs.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Arkah (https://arkah.io)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arkah-io/provider-schema-linter.git"
+  },
+  "homepage": "https://github.com/Arkah-io/provider-schema-linter#readme",
+  "bugs": "https://github.com/Arkah-io/provider-schema-linter/issues",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.1.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./zod": {
+      "types": "./dist/zod.d.ts",
+      "import": "./dist/zod.js"
+    },
+    "./emit": {
+      "types": "./dist/emit.d.ts",
+      "import": "./dist/emit.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "provider-schema-lint": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "src",
+    "examples",
+    "docs",
+    "README.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc --noEmit",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "test": "pnpm build && node --test test/*.test.mjs",
+    "demo": "pnpm build && node examples/demo.mjs",
+    "verify": "pnpm lint && pnpm check && pnpm test && pnpm demo",
+    "prepack": "pnpm build",
+    "smoke:package": "node scripts/package-smoke.mjs",
+    "prepublishOnly": "pnpm verify && pnpm smoke:package"
+  },
+  "peerDependencies": {
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "zod": "4.6.5"
+  },
+  "keywords": [
+    "json-schema",
+    "structured-outputs",
+    "lint",
+    "openai",
+    "anthropic",
+    "gemini",
+    "zod",
+    "langchain",
+    "json-schema-lint",
+    "function-calling",
+    "tool-calling",
+    "llm",
+    "ci"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
